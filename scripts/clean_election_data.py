@@ -4,33 +4,36 @@ import os
 base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "data"))
 
 def clean_btc_data(filename):
-    filepath = os.path.join(base_dir, filename)
-    df = pd.read_csv(filepath, parse_dates=['date'])
-    df = df[['date', 'open', 'high', 'low', 'close', 'volumeto']]
-    df.rename(columns={'volumeto': 'volume'}, inplace=True)
-    df.dropna(inplace=True)
-    df.sort_values('date', inplace=True)
-    df.to_csv(filepath.replace('.csv', '_clean.csv'), index=False)
-    print(f"Cleaned {filename} and saved.")
+    path = os.path.join(base_dir, filename)
+    data = pd.read_csv(path, parse_dates=['date'])
+    data = data[['date', 'open', 'high', 'low', 'close', 'volumeto']]
+    data.rename(columns={'volumeto': 'volume'}, inplace=True)
+    data.dropna(inplace=True)
+    data.sort_values('date', inplace=True)
+    cleaned_path = path.replace('.csv', '_clean.csv')
+    data.to_csv(cleaned_path, index=False)
+    print(f"{filename} cleaned and saved as {os.path.basename(cleaned_path)}")
 
 def clean_market_data(filename):
-    filepath = os.path.join(base_dir, filename)
-    df = pd.read_csv(filepath, parse_dates=['date'])
-    df = df[['date', 'open', 'high', 'low', 'close', 'volume']]
-    df.dropna(inplace=True)
-    df.sort_values('date', inplace=True)
-    df.to_csv(filepath.replace('.csv', '_clean.csv'), index=False)
-    print(f"Cleaned {filename} and saved.")
+    path = os.path.join(base_dir, filename)
+    data = pd.read_csv(path, parse_dates=['date'])
+    data = data[['date', 'open', 'high', 'low', 'close', 'volume']]
+    data.dropna(inplace=True)
+    data.sort_values('date', inplace=True)
+    cleaned_path = path.replace('.csv', '_clean.csv')
+    data.to_csv(cleaned_path, index=False)
+    print(f"{filename} cleaned and saved as {os.path.basename(cleaned_path)}")
 
 def clean_treasury_data(filename):
-    filepath = os.path.join(base_dir, filename)
-    df = pd.read_csv(filepath, parse_dates=['date'])
-    df.rename(columns={'yield': 'treasury_yield'}, inplace=True)
-    df = df[['date', 'treasury_yield']]
-    df.dropna(inplace=True)
-    df.sort_values('date', inplace=True)
-    df.to_csv(filepath.replace('.csv', '_clean.csv'), index=False)
-    print(f"Cleaned {filename} and saved.")
+    path = os.path.join(base_dir, filename)
+    data = pd.read_csv(path, parse_dates=['date'])
+    data.rename(columns={'yield': 'treasury_yield'}, inplace=True)
+    data = data[['date', 'treasury_yield']]
+    data.dropna(inplace=True)
+    data.sort_values('date', inplace=True)
+    cleaned_path = path.replace('.csv', '_clean.csv')
+    data.to_csv(cleaned_path, index=False)
+    print(f"{filename} cleaned and saved as {os.path.basename(cleaned_path)}")
 
 if __name__ == "__main__":
     clean_btc_data("btc_control_period.csv")
